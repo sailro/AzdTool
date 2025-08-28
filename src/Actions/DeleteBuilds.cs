@@ -22,13 +22,16 @@ internal class DeleteBuilds(VisitorNode node) : BatchOrUnitAction<AZBuild>(node,
 		{
 			foreach (var item in items)
 			{
-				var leases = await client.GetRetentionLeasesForBuildAsync(item.Project.Id, item.Id);
+				var projectId = item.Project.Id;
+				var buildId = item.Id;
+
+				var leases = await client.GetRetentionLeasesForBuildAsync(projectId, buildId);
 				if (leases.Count > 0)
 				{
-					await client.DeleteRetentionLeasesByIdAsync(item.Project.Id, leases.Select(l => l.LeaseId));
+					await client.DeleteRetentionLeasesByIdAsync(projectId, leases.Select(l => l.LeaseId));
 				}
 
-				await client.DeleteBuildAsync(item.Project.Id, item.Id);
+				await client.DeleteBuildAsync(projectId, buildId);
 			}
 		});
 	}
