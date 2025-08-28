@@ -18,6 +18,7 @@ internal class Builds(Pipeline pipeline) : BatchVisitorNode<AZBuild>
 
 			result.AddRange(AllItems.Select(build => new Build(this, build)));
 			result.Add(new CancelBuilds(this));
+			result.Add(new DeleteBuilds(this));
 			result.Add(new Refresh(this));
 			result.Add(new GoBack(pipeline));
 			result.Add(new Exit());

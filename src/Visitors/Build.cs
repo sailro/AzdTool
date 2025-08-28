@@ -13,6 +13,7 @@ internal class Build(Builds builds, AZBuild build) : UnitVisitorNode<AZBuild>
 
 	public override List<INode> Children => [
 		new CancelBuilds(this),
+		new DeleteBuilds(this),
 		new GoBack(builds),
 		new Exit()
 	];
